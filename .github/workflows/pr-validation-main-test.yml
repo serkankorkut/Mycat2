@@ -42,4 +42,6 @@ jobs:
           apikey: ${{ secrets.THUNDRA_DEMO_APIKEY }}
           project_id: ${{ secrets.THUNDRA_DEMO_PROJECT_ID }}
           command: mvn clean install
+        env:
+          THUNDRA_AGENT_REPORT_REST_BASEURL: https://collector.thundra.me/v1
 
