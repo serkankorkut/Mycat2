@@ -35,4 +35,10 @@ jobs:
           java -jar mycat2/target/mycat2-1.20-jar-with-dependencies.jar &
           sleep 10s
           mvn test -pl example -am
+      - name: Thundra Maven Test Instrumentation
+        uses: thundra-io/thundra-maven-test-action@v1
+        with:
+          apikey: ${{ secrets.THUNDRA_DEMO_APIKEY }}
+          project_id: ${{ secrets.THUNDRA_DEMO_PROJECT_ID }}
+          command: mvn clean install
 
