@@ -8,6 +8,7 @@ on:
     branches: [ dev ]
   pull_request:
     branches: [ dev ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,5 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Thundra Maven Test Instrumentation
+      uses: thundra-io/thundra-maven-test-action@v1
+      env:
+        THUNDRA_AGENT_REPORT_REST_BASEURL: https://collector.thundra.us/v1
+      with:
+        apikey: ${{ secrets.THUNDRA_DEMO_APIKEY}}
+        project_id: ${{ secrets.THUNDRA_DEMO_PROJECT_ID}}
+        command: mvn clean install
 
 
