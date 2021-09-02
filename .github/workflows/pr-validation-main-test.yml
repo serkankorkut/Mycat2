@@ -1,20 +1,15 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: Java CI - Mycat2 Main
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -36,3 +31,11 @@ jobs:
           java -jar mycat2/target/mycat2-1.20-jar-with-dependencies.jar &
           sleep 10s
           mvn test -pl example -am
+      - name: Thundra Maven Test Instrumentation
+        uses: thundra-io/thundra-maven-test-action@v1
+        with:
+          apikey: ${{ secrets.THUNDRA_DEMO_APIKEY }}
+          project_id: ${{ secrets.THUNDRA_DEMO_PROJECT_ID }}
+          command: mvn clean install
+        env:
+          THUNDRA_AGENT_REPORT_REST_BASEURL: https://collector.thundra.us/v1
